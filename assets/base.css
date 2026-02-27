@@ -5199,18 +5199,37 @@ product-recommendations:has([data-has-recommendations="false"]) {
   clip-path: circle(100% at 50% 50%);
 }
 
-/* AED currency logo styles */
-.price-with-aed {
-  display: inline-flex;
-  align-items: center;
-  line-height: 1;
+/* AED currency SVG icon - scaled to match price text */
+.aed-currency-icon {
+  display: inline-block;
+  width: auto;
+  height: 1em;
+  vertical-align: middle;
+  margin-right: 0.2em;
+  margin-bottom: 0.05em;
 }
 
-.aed-icon {
-  width: 0.9rem;
-  height: 0.9rem;
-  margin-right: 0.3rem;
-  display: block;
+/* Product card - slightly smaller */
+.product-card .aed-currency-icon {
+  height: 0.85em;
+}
+
+/* Product page - standard */
+.product-price .aed-currency-icon,
+.product-info .aed-currency-icon {
+  height: 1.1em;
+}
+
+/* Cart items */
+cart-items .aed-currency-icon,
+.cart-item__price .aed-currency-icon {
+  height: 0.8em;
+}
+
+/* Compare at / sale price */
+.price .compare-at-price .aed-currency-icon {
+  height: 0.7em;
+  opacity: 0.7;
 }
 
 @keyframes atc-slide {
