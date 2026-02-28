@@ -70,9 +70,19 @@
     assign price_min = price_min | money
     assign price_max = price_max | money
   endif
+
+  # Check if we should show currency icon (AED)
+  assign show_currency_icon = false
+  assign currency_iso = localization.country.currency.iso_code
+  if currency_iso == 'AED'
+    assign show_currency_icon = true
+  endif
 -%}
 
 <div ref="priceContainer">
+  {%- if show_currency_icon -%}
+    {% render 'icon-currency', currency_iso: currency_iso %}
+  {%- endif -%}
   {% if has_volume_pricing %}
     {% comment %} Volume pricing display {% endcomment %}
     {% if show_compare_price %}

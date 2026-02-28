@@ -4944,3 +4944,16 @@ product-recommendations:has([data-has-recommendations='false']) {
     translate: 0px var(--atc-destination, 0px);
   }
 }
+
+.currency-icon {
+  display: inline-block;
+  vertical-align: text-bottom;
+  margin-right: 0.1em;
+  line-height: 1;
+}
+
+.currency-icon svg {
+  display: block;
+  width: 1em;
+  height: 1em;
+}

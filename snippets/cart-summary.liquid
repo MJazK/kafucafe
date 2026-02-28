@@ -221,6 +221,12 @@
     else
       assign total_price = cart.total_price | money
     endif
+
+    assign currency_iso = localization.country.currency.iso_code
+    assign show_currency_icon = false
+    if currency_iso == 'AED'
+      assign show_currency_icon = true
+    endif
   -%}
 
   <div class="cart-totals__container{% if settings.show_installments %} cart-totals__container--has-installments{% endif %}">
@@ -237,6 +243,9 @@
         data-testid="cart-total-value"
         data-cart-subtotal
       >
+        {%- if show_currency_icon -%}
+          {% render 'icon-currency', currency_iso: currency_iso %}
+        {%- endif -%}
         {{ total_price }}
       </text-component>
     </span>

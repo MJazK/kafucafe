@@ -26,6 +26,15 @@
     assign per_item_text = 'content.quantity_per_item' | t
     assign formatted_price = formatted_price | append: per_item_text
   endif
+
+  assign currency_iso = localization.country.currency.iso_code
+  assign show_currency_icon = false
+  if currency_iso == 'AED'
+    assign show_currency_icon = true
+  endif
 %}
 
+{%- if show_currency_icon -%}
+  {% render 'icon-currency', currency_iso: currency_iso %}
+{%- endif -%}
 {{- formatted_price -}}
