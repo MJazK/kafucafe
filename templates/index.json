@@ -448,7 +448,7 @@
       },
       "settings": {
         "collection": "homeline",
-        "layout_type": "grid",
+        "layout_type": "carousel",
         "carousel_on_mobile": false,
         "max_products": 8,
         "columns": 4,
@@ -636,7 +636,7 @@
       },
       "settings": {
         "collection": "commercial",
-        "layout_type": "grid",
+        "layout_type": "carousel",
         "carousel_on_mobile": false,
         "max_products": 8,
         "columns": 4,
@@ -1012,7 +1012,7 @@
       },
       "settings": {
         "collection": "kitchen-equipments",
-        "layout_type": "grid",
+        "layout_type": "carousel",
         "carousel_on_mobile": false,
         "max_products": 8,
         "columns": 4,
@@ -1200,7 +1200,7 @@
       },
       "settings": {
         "collection": "cleaning-tools",
-        "layout_type": "grid",
+        "layout_type": "carousel",
         "carousel_on_mobile": false,
         "max_products": 8,
         "columns": 4,
