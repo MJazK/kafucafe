@@ -4957,3 +4957,11 @@ product-recommendations:has([data-has-recommendations='false']) {
   width: 1em;
   height: 1em;
 }
+
+/* League Spartan for Headings */
+h1, h2, h3, h4, h5, h6,
+.h0, .h1, .h2, .h3, .h4, .h5, .h6,
+.heading,
+.title {
+  font-family: 'League Spartan', var(--font-heading-family);
+}
