@@ -1,0 +1,24 @@
+{%- doc -%}
+  Currency Icon
+  
+  Renders the AED currency icon when the currency is AED.
+  Uses the icon-currency-aed.svg asset.
+  
+  @param {string} [currency_iso] - Currency ISO code (defaults to localization.country.currency.iso_code)
+  @param {string} [class] - Additional CSS classes for the icon
+  
+  @example
+  {% render 'icon-currency', currency_iso: 'AED' %}
+  {% render 'icon-currency', class: 'currency-icon--small' %}
+{%- enddoc -%}
+
+{%- liquid
+  assign currency_iso = currency_iso | default: localization.country.currency.iso_code
+  assign icon_class = class | default: 'icon-currency-aed'
+-%}
+
+{%- if currency_iso == 'AED' -%}
+  <span class="currency-icon {{ icon_class }}">
+    {{- 'icon-currency-aed.svg' | inline_asset_content -}}
+  </span>
+{%- endif -%}

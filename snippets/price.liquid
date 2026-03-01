@@ -59,59 +59,64 @@
   endif
 
   # Format all prices
-  assign price = price | money
-  assign compare_at_price = compare_at_price | money
-  assign price_min = price_min | money
-  assign price_max = price_max | money
+  if use_currency
+    assign price = price | money_with_currency
+    assign compare_at_price = compare_at_price | money_with_currency
+    assign price_min = price_min | money_with_currency
+    assign price_max = price_max | money_with_currency
+  else
+    assign price = price | money
+    assign compare_at_price = compare_at_price | money
+    assign price_min = price_min | money
+    assign price_max = price_max | money
+  endif
+
+  # Check if we should show currency icon (AED)
+  assign show_currency_icon = false
+  assign currency_iso = localization.country.currency.iso_code
+  if currency_iso == 'AED'
+    assign show_currency_icon = true
+  endif
 -%}
 
 <div ref="priceContainer">
+  {%- if show_currency_icon -%}
+    {% render 'icon-currency', currency_iso: currency_iso %}
+  {%- endif -%}
   {% if has_volume_pricing %}
     {% comment %} Volume pricing display {% endcomment %}
     {% if show_compare_price %}
       <span role="group">
         <span class="visually-hidden">{{ 'content.price_regular' | t }}&nbsp;</span>
-        <span class="compare-at-price">
-          <img src="{{ 'icon-currency-aed.svg' | asset_url }}" alt="AED" class="aed-currency-icon" loading="lazy">{{- compare_at_price -}}
-        </span>
+        <span class="compare-at-price">{{- compare_at_price -}}</span>
       </span>
     {% endif %}
     <span role="group">
       <span class="visually-hidden">{{ 'content.price_range' | t }}&nbsp;</span>
-      <span class="price">
-        <img src="{{ 'icon-currency-aed.svg' | asset_url }}" alt="AED" class="aed-currency-icon" loading="lazy">{{ price_min }} - {{ price_max }}
-      </span>
+      <span class="price">{{ price_min }} - {{ price_max }}</span>
     </span>
   {% else %}
     {% comment %} Standard pricing display {% endcomment %}
     {% if show_sale_price_first == false and show_compare_price %}
       <span role="group">
         <span class="visually-hidden">{{ 'content.price_regular' | t }}&nbsp;</span>
-        <span class="compare-at-price">
-          <img src="{{ 'icon-currency-aed.svg' | asset_url }}" alt="AED" class="aed-currency-icon" loading="lazy">{{- compare_at_price -}}
-        </span>
+        <span class="compare-at-price">{{- compare_at_price -}}</span>
       </span>
     {% endif %}
 
     {% if show_compare_price %}
       <span role="group">
         <span class="visually-hidden">{{ 'content.price_sale' | t }}&nbsp;</span>
-        <span class="price">
-          <img src="{{ 'icon-currency-aed.svg' | asset_url }}" alt="AED" class="aed-currency-icon" loading="lazy">{{ price | default: '&nbsp;' }}
-        </span>
+        <span class="price">{{ price | default: '&nbsp;' }}</span>
       </span>
     {% else %}
-      <span class="price">
-        <img src="{{ 'icon-currency-aed.svg' | asset_url }}" alt="AED" class="aed-currency-icon" loading="lazy">{{ price | default: '&nbsp;' }}
-      </span>
+      <span class="price">{{ price | default: '&nbsp;' }}</span>
     {% endif %}
 
     {% if show_sale_price_first == true and show_compare_price %}
       <span role="group">
         <span class="visually-hidden">{{ 'content.price_regular' | t }}&nbsp;</span>
-        <span class="compare-at-price">
-          <img src="{{ 'icon-currency-aed.svg' | asset_url }}" alt="AED" class="aed-currency-icon" loading="lazy">{{- compare_at_price -}}
-        </span>
+        <span class="compare-at-price">{{- compare_at_price -}}</span>
       </span>
     {% endif %}
   {% endif %}
