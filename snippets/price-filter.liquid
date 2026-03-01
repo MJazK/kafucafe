@@ -111,7 +111,11 @@
                 class="field__label price-facet__label"
                 for="{{ filter.label | escape }}-GTE"
               >
-                {{ cart.currency.symbol }}
+                {%- if localization.country.currency.iso_code == 'AED' -%}
+                  {% render 'icon-currency', currency_iso: 'AED' %}
+                {%- else -%}
+                  {{ localization.country.currency.symbol }}
+                {%- endif -%}
               </label>
             </div>
 
@@ -137,7 +141,11 @@
                 class="field__label price-facet__label"
                 for="{{ filter.label | escape }}-LTE"
               >
-                {{ cart.currency.symbol }}
+                {%- if localization.country.currency.iso_code == 'AED' -%}
+                  {% render 'icon-currency', currency_iso: 'AED' %}
+                {%- else -%}
+                  {{ localization.country.currency.symbol }}
+                {%- endif -%}
               </label>
             </div>
           </div>
