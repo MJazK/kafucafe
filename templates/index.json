@@ -182,7 +182,7 @@
         }
       },
       "settings": {
-        "collection": "best-sellers",
+        "collection": "bestseller",
         "layout_type": "grid",
         "carousel_on_mobile": false,
         "max_products": 8,
@@ -306,7 +306,7 @@
         }
       },
       "settings": {
-        "collection": "homeline-machines",
+        "collection": "homelinemachines",
         "layout_type": "grid",
         "carousel_on_mobile": false,
         "max_products": 8,
@@ -430,7 +430,7 @@
         }
       },
       "settings": {
-        "collection": "commercial-machines",
+        "collection": "commercialmachines",
         "layout_type": "grid",
         "carousel_on_mobile": false,
         "max_products": 8,
@@ -554,7 +554,7 @@
         }
       },
       "settings": {
-        "collection": "coffee-grinders",
+        "collection": "coffeegrinders",
         "layout_type": "grid",
         "carousel_on_mobile": false,
         "max_products": 8,
@@ -678,7 +678,7 @@
         }
       },
       "settings": {
-        "collection": "kitchen-equipments",
+        "collection": "kitchenequipments",
         "layout_type": "grid",
         "carousel_on_mobile": false,
         "max_products": 8,
@@ -802,7 +802,7 @@
         }
       },
       "settings": {
-        "collection": "cleaning-products",
+        "collection": "cleaningproducts",
         "layout_type": "grid",
         "carousel_on_mobile": false,
         "max_products": 8,
@@ -926,7 +926,7 @@
         }
       },
       "settings": {
-        "collection": "new-arrivals",
+        "collection": "newarrivals",
         "layout_type": "grid",
         "carousel_on_mobile": false,
         "max_products": 8,
