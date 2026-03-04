@@ -1,5 +1,12 @@
 # AGENTS.md - KafuCafe Theme Development Guide
 
+## Project Context
+
+**IMPORTANT**: This is a Shopify theme for a **coffee and coffee tooling company** called "KafuCafe". Before working on this project, read the following files to understand the project vision:
+
+- @PROJECT.md - Project vision, brand identity, and design direction
+- @docs/product-types.md - Product categories, attributes, and collection structure
+
 ## Overview
 
 This is a Shopify theme based on **Horizon** - a first-party Shopify theme. Uses Liquid for server-side rendering, vanilla JavaScript with Web Components, and modern CSS. No Node.js build step - pure Shopify theme.
@@ -10,14 +17,15 @@ This is a Shopify theme based on **Horizon** - a first-party Shopify theme. Uses
 
 ### Commands
 ```bash
-shopify theme dev              # Development server
+shopify theme dev              # Development server with live reload
 shopify theme check            # Lint/validate theme
-shopify theme check --auto-fix # Auto-fix issues
+shopify theme check --auto-fix # Auto-fix linting issues
 shopify theme push             # Push to store
 shopify theme publish          # Deploy to production
+npm run build:schemas          # Build schemas from JS source files
 ```
 
-**Note:** No traditional unit tests - validation via Theme Check.
+**Note:** No traditional unit tests - validation via Theme Check (`shopify theme check`).
 
 ---
 
@@ -28,18 +36,20 @@ shopify theme publish          # Deploy to production
 - **Server-rendered HTML** - All content via Liquid
 - **Progressive enhancement** - Works without JS
 - **Evergreen web** - Latest browser features; no polyfills
+- **Use `const` over `let`** unless necessary
+- **Use `for (const item of items)`** over `items.forEach()`
 
 ---
 
 ### JavaScript Standards (`assets/*.js`)
 
-- Use `const` over `let` unless necessary
-- Use `for (const item of items)` over `items.forEach()`
-- Use Web Components via Component framework (`assets/component.js`)
-- Always use async/await over `.then()` chaining
-
+#### Imports
 ```javascript
 import { Component } from '@theme/component';
+```
+
+#### Web Components Pattern
+```javascript
 class MyComponent extends Component {
   requiredRefs = ['element'];
   connectedCallback() { super.connectedCallback(); }
@@ -58,6 +68,27 @@ const fetchData = async (url) => {
     console.error('Fetch error:', error);
     return null;
   }
+};
+```
+
+#### Early Returns (avoid nested conditionals)
+```javascript
+const processOrder = (order) => {
+  if (!order) return;
+  if (!order.items.length) return;
+  // Process the order
+};
+```
+
+#### URL Manipulation
+```javascript
+const updateFilters = (filters) => {
+  const url = new URL(window.location.href);
+  for (const [key, value] of Object.entries(filters)) {
+    value ? url.searchParams.set(key, value) : url.searchParams.delete(key);
+  }
+  history.pushState({}, '', url.toString());
+  return url;
 };
 ```
 
@@ -82,19 +113,19 @@ const fetchData = async (url) => {
 - Namespace: `--component-property`
 - Global variables in `snippets/theme-styles-variables.liquid`
 
-#### Modern Features
-- Container queries, `clamp()` for fluid spacing
-- Logical properties (`padding-inline`, `margin-block`)
-- Mobile-first media queries (`min-width`)
-
 #### Nesting Rules
-- No `&` operator in nested selectors
-- Never nest beyond first level (except media queries/states)
+- No `&` operator in nested selectors (except states: `&:hover`)
+- Never nest beyond first level (except media queries)
 ```css
 .component {
   @media screen and (min-width: 750px) { width: 100px; }
 }
 ```
+
+#### Modern Features
+- Container queries, `clamp()` for fluid spacing
+- Logical properties (`padding-inline`, `margin-block`)
+- Mobile-first media queries (`min-width`)
 
 ---
 
@@ -116,7 +147,6 @@ const fetchData = async (url) => {
   {{ content | truncate: 200 }}
 </div>
 ```
-Exceptions: Complex filter parameters, same calculation used multiple times.
 
 #### Snippet Documentation
 ```liquid
@@ -141,8 +171,9 @@ Exceptions: Complex filter parameters, same calculation used multiple times.
 #### Accessibility
 - All images must have `alt` text
 - Use semantic HTML (`<main>`, `<nav>`, `<section>`, etc.)
-- Ensure focus indicators are visible
+- Ensure focus indicators are visible (`:focus-visible`)
 - Support keyboard navigation
+- Respect `prefers-reduced-motion`
 
 ---
 
@@ -155,8 +186,8 @@ layout/        # Theme templates (theme.liquid)
 locales/       # Translation files (*.json)
 sections/      # Theme sections (*.liquid)
 snippets/      # Reusable Liquid partials (*.liquid)
-templates/    # Page templates (*.json)
-schemas/      # Schema source (JS) - generates Liquid
+templates/     # Page templates (*.json)
+schemas/       # Schema source (JS) - generates Liquid
 ```
 
 ---
@@ -164,9 +195,8 @@ schemas/      # Schema source (JS) - generates Liquid
 ### Cursor Rules (Applied)
 
 This project includes Cursor rules in `.cursor/rules/`:
-
 - `javascript-standards.mdc` - JS/Web Components patterns
-- `css-standards.mdc` - CSS, BEM, variables  
+- `css-standards.mdc` - CSS, BEM, variables
 - `liquid.mdc` - Liquid syntax, schema generation
 - `html-standards.mdc` - Modern HTML elements
 - `*accessibility*.mdc` - WCAG requirements
@@ -183,3 +213,5 @@ This project includes Cursor rules in `.cursor/rules/`:
 5. Use semantic HTML - meaningful structure
 6. Keep CSS scoped - use BEM and CSS variables
 7. Document snippets with `{% doc %}` tags
+8. Validate all DOM elements before use
+9. Use AbortController for async request cleanup
